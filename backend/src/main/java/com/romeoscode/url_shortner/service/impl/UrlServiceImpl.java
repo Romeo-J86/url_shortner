@@ -8,6 +8,8 @@ import com.romeoscode.url_shortner.service.UrlService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,7 +74,6 @@ public class UrlServiceImpl implements UrlService {
             throw new UrlExpiredException(shortCode);
         }
 
-        // Increment click count
         urlEntity.incrementClickCount();
         urlRepository.save(urlEntity);
 
@@ -80,8 +81,7 @@ public class UrlServiceImpl implements UrlService {
     }
 
     @Override
-    public org.springframework.data.domain.Page<UrlEntity> getAllUrls(
-            org.springframework.data.domain.Pageable pageable) {
+    public Page<UrlEntity> getAllUrls(Pageable pageable) {
         return urlRepository.findAll(pageable);
     }
 
