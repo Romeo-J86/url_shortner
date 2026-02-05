@@ -4,14 +4,14 @@ A modern, full-stack URL shortening service built with **Spring Boot (Java 17)**
 
 ## Features
 
-✨ **Core Functionality**
+  **Core Functionality**
 - Shorten long URLs into compact, shareable links
 - Automatic redirect from short codes to original URLs
 - Optional expiry dates for time-limited links
 - Click tracking and analytics
 - Full CRUD operations
 
-🎨 **Modern UI Design**
+  **Modern UI Design**
 - Dark theme with animated gradient background
 - Glassmorphism effects
 - Smooth animations and transitions
@@ -244,6 +244,3 @@ java -jar target/url_shortener-1.0.0.jar
 cd frontend
 npm run build
 ```
-
-
-**Made with ❤️ using Spring Boot, React, and Java 17**
