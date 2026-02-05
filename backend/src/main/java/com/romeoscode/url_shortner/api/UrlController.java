@@ -3,6 +3,7 @@ package com.romeoscode.url_shortner.api;
 import com.romeoscode.url_shortner.dto.CreateUrlRequest;
 import com.romeoscode.url_shortner.dto.UrlResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -22,6 +23,7 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
  * projectName url_shortner
  **/
 
+@Tag(name = "URL Shortener Rest APIs")
 public interface UrlController {
 
     @PostMapping("/api/urls")
