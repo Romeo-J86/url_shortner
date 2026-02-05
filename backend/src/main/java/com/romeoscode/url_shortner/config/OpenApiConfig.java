@@ -1,5 +1,6 @@
 package com.romeoscode.url_shortner.config;
 
+import com.romeoscode.url_shortner.util.AppDocs;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Contact;
 import io.swagger.v3.oas.models.info.Info;
@@ -21,14 +22,14 @@ public class OpenApiConfig {
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
                 .info(new Info()
-                        .title("URL Shortener API")
-                        .version("1.0.0")
-                        .description("REST API for shortening long URLs and tracking click analytics.")
+                        .title(AppDocs.TITLE)
+                        .version(AppDocs.VERSION)
+                        .description(AppDocs.DESCRIPTION)
                         .contact(new Contact()
-                                .name("API Support")
-                                .url("https://github.com/romeo/url_shortener"))
+                                .name(AppDocs.Contacts.NAME)
+                                .email(AppDocs.Contacts.EMAIL))
                         .license(new License()
-                                .name("Apache 2.0")
-                                .url("http://springdoc.org")));
+                                .name(AppDocs.Licence.NAME)
+                        ));
     }
 }

@@ -2,6 +2,7 @@ package com.romeoscode.url_shortner.api;
 
 import com.romeoscode.url_shortner.dto.CreateUrlRequest;
 import com.romeoscode.url_shortner.dto.UrlResponse;
+import com.romeoscode.url_shortner.util.AppDocs;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletResponse;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -23,10 +25,15 @@ import static org.springframework.data.domain.Sort.Direction.DESC;
  * projectName url_shortner
  **/
 
-@Tag(name = "URL Shortener Rest APIs")
+@Tag(
+        name = AppDocs.UrlShortenerEndpoints.NAME ,
+        description = AppDocs.UrlShortenerEndpoints.DESCRIPTION
+)
+@RequestMapping(AppDocs.UrlShortenerEndpoints.BASE_URL)
+@Validated
 public interface UrlController {
 
-    @PostMapping("/api/urls")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     @Operation(
             summary = "Create a new short URL",
@@ -34,7 +41,7 @@ public interface UrlController {
     )
     UrlResponse createShortUrl(@Valid @RequestBody CreateUrlRequest request);
 
-    @GetMapping("/api/urls/{shortCode}")
+    @GetMapping("/{shortCode}")
     @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "Get URL details",
@@ -46,7 +53,7 @@ public interface UrlController {
     )
     UrlResponse getUrlDetails(@PathVariable String shortCode);
 
-    @GetMapping("/api/urls")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     @Operation(
             summary = "List all shortened URLs",
@@ -55,7 +62,7 @@ public interface UrlController {
     Page<UrlResponse> getAllUrls(
             @PageableDefault(size = 8, sort = "createdAt", direction = DESC) Pageable pageable);
 
-    @DeleteMapping("/api/urls/{shortCode}")
+    @DeleteMapping("/{shortCode}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @Operation(
             summary = "Delete a short URL",
@@ -63,7 +70,7 @@ public interface UrlController {
     )
     void deleteUrl(@PathVariable String shortCode);
 
-    @GetMapping("/{shortCode}")
+    @GetMapping("/{shortCode}/redirect")
     @Operation(
             summary = "Redirect to original URL",
             description = """
