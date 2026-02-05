@@ -87,12 +87,10 @@ url-shortner/
    mvn spring-boot:run
    ```
 
-   The backend will start on **http://localhost:8080**
-
-    - H2 Console: http://localhost:8080/h2-console
-    - JDBC URL: `jdbc:h2:mem:urlshortener`
-    - Username: `sa`
-    - Password: (leave empty)
+   The backend will start on **http://localhost:12000**
+ 
+    - Health Check: http://localhost:12000/actuator/health
+    - Swagger UI: http://localhost:12000/swagger-ui/index.html
 
 ### Frontend Setup
 
@@ -129,9 +127,9 @@ The easiest way to run the entire stack is using Docker Compose.
    ```
 
 2. **Access the application**:
-    - Frontend: http://localhost (Port 80)
+    - Frontend: http://localhost:3000
     - Backend API: http://localhost:12000
-    - Swagger UI: http://localhost:12000/swagger-ui.html
+    - Swagger UI: http://localhost:12000/swagger-ui/index.html
 
 3. **Stop the containers**:
    ```cmd
@@ -178,9 +176,9 @@ Returns: HTTP 302 redirect to the original URL
 
 ## Usage
 
-1. **Start both servers** (backend on :8080, frontend on :5173)
-
-2. **Open your browser** to http://localhost:5173
+1. **Start both servers** (backend on :12000, frontend on :5173 for dev or :3000 for Docker)
+ 
+2. **Open your browser** to http://localhost:5173 (Dev) or http://localhost:3000 (Docker)
 
 3. **Create a short URL**:
     - Enter a long URL (must start with http:// or https://)
@@ -199,31 +197,6 @@ Returns: HTTP 302 redirect to the original URL
 6. **Test the redirect** by opening the short URL in a new tab
 
 ## Configuration
-
-### Database
-
-By default, the application uses H2 in-memory database. To use MySQL in production:
-
-1. Update `application.yml`:
-   ```yaml
-   spring:
-     datasource:
-       url: jdbc:mysql://localhost:3306/url_shortener?
-       driver-class-name: com.mysql.cj.jdbc.Driver
-       username: your_username
-       password: your_password
-     jpa:
-       hibernate:
-         ddl-auto: update
-       properties:
-         hibernate:
-           dialect: org.hibernate.dialect.MySQL8Dialect
-   ```
-
-2. Create the database:
-   ```sql
-   CREATE DATABASE url_shortener;
-   ```
 
 ### CORS
 
@@ -272,16 +245,5 @@ cd frontend
 npm run build
 ```
 
-Serve the `dist` folder using any static file server.
-
-## License
-
-This project is open source and available for educational purposes.
-
-## Support
-
-For issues or questions, please create an issue in the repository.
-
----
 
 **Made with ❤️ using Spring Boot, React, and Java 17**

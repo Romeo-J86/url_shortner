@@ -4,7 +4,7 @@
 ```cmd
 docker-compose up --build
 ```
-Everything will be ready at: http://localhost
+Everything will be ready at: http://localhost:3000
 
 ## Start Backend (Terminal 1 - Local Development)
 ```cmd
@@ -24,7 +24,7 @@ npm run dev
 Frontend will be available at: http://localhost:5173
 
 ## Open Application
-Open your browser to: http://localhost:5173
+Open your browser to: http://localhost:5173 (Development) or http://localhost:3000 (Docker)
 
 ## Test the Application
 1. Enter a URL (e.g., https://www.google.com)
@@ -36,11 +36,11 @@ Open your browser to: http://localhost:5173
 ## API Testing (Optional)
 ```cmd
 # Create a short URL
-curl -X POST http://localhost:8080/api/urls -H "Content-Type: application/json" -d "{\"url\": \"https://www.example.com\", \"expiryDays\": 30}"
+curl -X POST http://localhost:12000/api/urls -H "Content-Type: application/json" -d "{\"url\": \"https://www.example.com\", \"expiryDays\": 30}"
 
 # Get all URLs
-curl http://localhost:8080/api/urls
+curl http://localhost:12000/api/urls
 
 # Test redirect (replace ABC123 with actual short code)
-curl -i http://localhost:8080/ABC123
+curl -i http://localhost:12000/ABC123
 ```
