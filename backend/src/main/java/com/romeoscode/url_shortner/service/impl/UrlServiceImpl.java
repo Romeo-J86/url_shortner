@@ -15,6 +15,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.time.LocalDateTime;
+import java.util.Objects;
+
+import static java.text.MessageFormat.format;
+import static java.util.Objects.requireNonNull;
 
 /**
  * createdBy romeo
@@ -28,9 +32,7 @@ import java.time.LocalDateTime;
 @RequiredArgsConstructor
 public class UrlServiceImpl implements UrlService {
 
-
     private final UrlRepository urlRepository;
-    private final SecureRandom secureRandom = new SecureRandom();
 
     @Value("${app.base62.chars}")
     private String base62Chars;
@@ -44,6 +46,7 @@ public class UrlServiceImpl implements UrlService {
     @Override
     @Transactional
     public UrlEntity createShortUrl(String originalUrl, Integer expiryDays) {
+        requireNonNull(originalUrl, "original url is null");
         String shortCode = generateUniqueShortCode();
 
         LocalDateTime expiresAt = null;
@@ -51,6 +54,7 @@ public class UrlServiceImpl implements UrlService {
             expiresAt = LocalDateTime.now().plusDays(expiryDays);
         }
 
+        log.info("Creating short url for original url {}", originalUrl);
         UrlEntity urlEntity = UrlEntity.builder()
                 .originalUrl(originalUrl)
                 .shortCode(shortCode)
@@ -67,6 +71,8 @@ public class UrlServiceImpl implements UrlService {
     @Override
     @Transactional
     public UrlEntity getByShortCode(String shortCode) {
+        requireNonNull(shortCode, "Short code is null");
+        log.info("Getting url by shortCode: {}", shortCode);
         UrlEntity urlEntity = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException(shortCode));
 
@@ -82,12 +88,16 @@ public class UrlServiceImpl implements UrlService {
 
     @Override
     public Page<UrlEntity> getAllUrls(Pageable pageable) {
+        log.info("Getting all urls");
         return urlRepository.findAll(pageable);
     }
 
     @Override
     @Transactional
     public void deleteByShortCode(String shortCode) {
+        requireNonNull(shortCode, "Short code cannot be null");
+
+        log.info("Deleting URL with shortcode: {}", shortCode);
         UrlEntity urlEntity = urlRepository.findByShortCode(shortCode)
                 .orElseThrow(() -> new UrlNotFoundException(shortCode));
 
@@ -96,6 +106,8 @@ public class UrlServiceImpl implements UrlService {
     }
 
     private String generateUniqueShortCode() {
+        log.info("Generating short code");
+
         int attempts = 0;
 
         while (attempts < maxRetries) {
@@ -108,11 +120,16 @@ public class UrlServiceImpl implements UrlService {
             attempts++;
         }
 
-        throw new RuntimeException("Failed to generate unique short code after " + maxRetries + " attempts");
+        throw new RuntimeException(
+                format("Failed to generate unique short code after {0} attempts",
+                        maxRetries));
     }
 
     private String generateRandomShortCode() {
+        log.info("Attempting to generate random short code");
+
         StringBuilder sb = new StringBuilder(shortCodeLength);
+        SecureRandom secureRandom = new SecureRandom();
 
         for (int i = 0; i < shortCodeLength; i++) {
             int randomIndex = secureRandom.nextInt(base62Chars.length());
