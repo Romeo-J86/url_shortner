@@ -1,0 +1,31 @@
+.url-form-container {
+    animation: fadeInUp 0.6s ease;
+}
+
+.url-form-container h2 {
+    text-align: center;
+    margin-bottom: var(--spacing-lg);
+    color: var(--color-text-primary);
+}
+
+.url-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.btn-large {
+    width: 100%;
+    padding: var(--spacing-md);
+    font-size: 1.1rem;
+    margin-top: var(--spacing-sm);
+}
+
+.error-message {
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    padding: var(--spacing-sm);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--spacing-sm);
+    animation: fadeIn 0.3s ease;
+}

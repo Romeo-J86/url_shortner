@@ -21,9 +21,9 @@ A modern, full-stack URL shortening service built with **Spring Boot (Java 17)**
 ## Tech Stack
 
 ### Backend
-- **Framework**: Spring Boot 3.2.2
+- **Framework**: Spring Boot 3.3.3
 - **Java Version**: 17
-- **Database**: H2 (development), MySQL (production ready)
+- **Database**: MySQL
 - **ORM**: Spring Data JPA
 - **Build Tool**: Maven
 
@@ -130,9 +130,8 @@ The easiest way to run the entire stack is using Docker Compose.
 
 2. **Access the application**:
     - Frontend: http://localhost (Port 80)
-    - Backend API: http://localhost:8080
-    - Swagger UI: http://localhost:8080/swagger-ui.html
-    - H2 Console: http://localhost:8080/h2-console
+    - Backend API: http://localhost:12000
+    - Swagger UI: http://localhost:12000/swagger-ui.html
 
 3. **Stop the containers**:
    ```cmd
